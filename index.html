@@ -1,0 +1,111 @@
+<html lang="de"><head>
+<meta charset="UTF-8">
+<title>Elliott Wave Drag &amp; Drop</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f4f4f4;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  #chart {
+    position: relative;
+    width: 800px;
+    margin: auto;
+  }
+
+  #chart img {
+    width: 100%;
+  }
+
+  .label {
+    position: absolute;
+    padding: 8px 12px;
+    background: #222;
+    color: #fff;
+    cursor: grab;
+    border-radius: 4px;
+    user-select: none;
+  }
+
+  .dropzone {
+    position: absolute;
+    width: 60px;
+    height: 30px;
+    border: 2px dashed #999;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Move the waves to the correct position</h2>
+
+<div id="chart">
+  <img src="https://raw.githubusercontent.com/ElliottWaveAcademy/elliott-dragdrop5/refs/heads/main/99e127_dace4604de2b444e8150a7498a0f7785%7Emv2.avif" alt="Elliott Wave Chart">
+
+  <!-- Drop-Zonen -->
+  <div class="dropzone" style="top: 220px; left: 220px; border: 2px solid green;">1</div>
+  <div class="dropzone" style="top: 350px; left: 250px; border: 2px solid green;">2</div>
+  <div class="dropzone" style="top: 120px; left: 370px; border: 2px solid green;">3</div>
+  <div class="dropzone" style="top: 250px; left: 400px; border: 2px solid green;">4</div>
+  <div class="dropzone" style="top: 45px; left: 480px; border: 2px solid green;">5</div>
+  <div class="dropzone" style="top: 190px; left: 520px; border: 2px solid green;">a</div>
+  <div class="dropzone" style="top: 85px; left: 570px; border: 2px solid green;">b</div>
+  <div class="dropzone" style="top: 230px; left: 620px; border: 2px solid green;">c</div>
+
+  <!-- Labels 1-5 -->
+  <div class="label" style="top:10px; left:10px;" draggable="true">1</div>
+  <div class="label" style="top:50px; left:10px;" draggable="true">2</div>
+  <div class="label" style="top:90px; left:10px;" draggable="true">3</div>
+  <div class="label" style="top:130px; left:10px;" draggable="true">4</div>
+  <div class="label" style="top:170px; left:10px;" draggable="true">5</div>
+
+  <!-- Labels a-c -->
+  <div class="label" style="top:210px; left:10px;" draggable="true">a</div>
+  <div class="label" style="top:250px; left:10px;" draggable="true">b</div>
+  <div class="label" style="top:290px; left:10px;" draggable="true">c</div>
+</div>
+
+<script>
+const labels = document.querySelectorAll('.label');
+const zones = document.querySelectorAll('.dropzone');
+
+// Reihenfolge der richtigen Lösungen
+const correct = ['1','2','3','4','5','a','b','c'];
+
+labels.forEach(label => {
+  label.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text', e.target.innerHTML);
+  });
+});
+
+zones.forEach((zone, i) => {
+  zone.addEventListener('dragover', e => e.preventDefault());
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const dropped = e.dataTransfer.getData('text');
+    zone.innerHTML = dropped;
+
+    // Feedback
+    if(dropped === correct[i]){
+      zone.style.border = '2px solid green';
+    } else {
+      zone.style.border = '2px solid red';
+    }
+  });
+});
+</script>
+
+
+
+</body></html>
